@@ -19,7 +19,7 @@
 - Read a graph of route length against the position of the door in a wall.
 
 ## A. Real-world problem
-A warehouse robot at the left of the floor must reach a shelf at the right. A long wall with one door stands between them. The straight line from robot to shelf runs through the wall, so the robot must walk to the door and back. How long is the real route, and how can a program find it without trying every possible walk? This is a simplified teaching model, not software for controlling a real robot.
+A warehouse robot at the left of the floor must reach a shelf at the right. A long wall with one door stands between them. The straight line from robot to shelf runs through the wall, so the robot must walk to the door and then on to the shelf. How long is the real route, and how can a program find it without trying every possible walk? This is a simplified teaching model, not software for controlling a real robot.
 
 ## B. Concept and theory
 We cut the floor into square cells. Each cell is free or blocked. The robot moves one cell at a time up, down, left or right, and every move costs one step. Breadth-first search (BFS) explores the floor in rings: first all cells one step from the robot, then all cells two steps away, and so on. The first time a ring touches the shelf, the number of the ring is the fewest possible steps. For cells dx columns and dy rows apart, the straight-line distance is sqrt(dx^2 + dy^2), but on an empty floor the 4-move route needs dx + dy steps, and any wall can only make the route longer, never shorter.
@@ -33,7 +33,7 @@ We cut the floor into square cells. Each cell is free or blocked. The robot move
 
 **Assumptions**
 
-- The floor is flat; the robot is a point that fills one cell.
+- The floor is flat; the robot occupies exactly one cell.
 - Moves are up, down, left, right only, each costing 1 step.
 - The wall is in column 6 and has exactly one door; robot at column 1, row 1; shelf at column 10.
 - The shelf cell is free to stand on.
@@ -45,7 +45,7 @@ $$ \text{empty floor, 4 moves: } dx+dy $$
 $$ \text{steps}=(10-1)+|1-d|+|d-s|=9+|1-d|+|d-s| $$
 
 ## C. Visual explanation
-The first figure shows the 12 by 8 floor. Grey cells are the wall, the red dashed line is the straight line that the wall blocks, and the blue line is the shortest route through the door in row 6: 18 steps against a straight line of 9.06 cells. The second figure plots the route length against the row of the door. The best doors are rows 1 and 2 with 10 steps, the same as on an empty floor, because the robot never has to leave its way. A door in row 7 costs 20 steps.
+The first figure shows the 12 by 8 floor. Grey cells are the wall, the red dashed line is the straight line that the wall blocks, and the blue line is the shortest route through the door in row 6: 18 steps, compared with a straight line of 9.06 cells. The second figure plots the route length against the row of the door. The best doors are rows 1 and 2 with 10 steps, the same as on an empty floor, because the shortest empty-floor route already passes through rows 1 and 2, so the wall adds no detour. A door in row 7 costs 20 steps.
 
 ![Route length against door row: best at rows 1 and 2 (10 steps), worst at row 7 (20 steps).](../../docs/figures/s01_route_vs_door.png)
 
